@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/AnimatedSection';
 
 /* ------------------------------------------------------------------ */
@@ -79,53 +80,35 @@ const veoAvailability: VeoAvailability[] = [
 interface CameraMovement {
   name: string;
   description: string;
-  whenToUse: string;
+  video: string;
 }
 
 const cameraMovements: CameraMovement[] = [
   {
     name: 'Pan',
-    description: 'Rotazione orizzontale della camera su asse fisso (sinistra/destra).',
-    whenToUse: 'Rivelare un ambiente ampio, seguire un soggetto in movimento orizzontale.',
+    description: 'Rotazione orizzontale della camera su asse fisso. La camera ruota a sinistra o destra rivelando l\'ambiente circostante.',
+    video: '/modulo-h/video/camera-pan-left.mp4',
   },
   {
     name: 'Tilt',
-    description: 'Rotazione verticale della camera su asse fisso (alto/basso).',
-    whenToUse: 'Rivelare l\'altezza di un edificio, passare dal dettaglio al contesto.',
+    description: 'Rotazione verticale della camera su asse fisso. La camera si inclina verso l\'alto o il basso, rivelando altezza o dettagli.',
+    video: '/modulo-h/video/camera-tilt-up.mp4',
   },
   {
     name: 'Zoom',
-    description: 'Avvicinamento o allontanamento ottico senza muovere la camera.',
-    whenToUse: 'Focalizzare l\'attenzione su un dettaglio, creare tensione.',
+    description: 'Avvicinamento ottico senza muovere la camera. Comprime la prospettiva e focalizza l\'attenzione su un dettaglio.',
+    video: '/modulo-h/video/camera-zoom-in.mp4',
   },
   {
     name: 'Dolly',
-    description: 'Movimento fisico della camera avanti o indietro.',
-    whenToUse: 'Entrare in una scena, creare profondita e immersione.',
-  },
-  {
-    name: 'Tracking',
-    description: 'La camera si muove lateralmente seguendo il soggetto.',
-    whenToUse: 'Seguire un personaggio che cammina, scene dinamiche.',
+    description: 'Movimento fisico della camera avanti o indietro. A differenza dello zoom, mantiene la prospettiva naturale con effetto parallasse.',
+    video: '/modulo-h/video/camera-dolly-in.mp4',
   },
   {
     name: 'Drone',
-    description: 'Ripresa aerea con movimento libero nello spazio tridimensionale.',
-    whenToUse: 'Viste panoramiche, transizioni tra ambienti, aperture epiche.',
+    description: 'Ripresa aerea con movimento libero nello spazio 3D. La camera si alza e si allontana rivelando l\'intera scena dall\'alto.',
+    video: '/modulo-h/video/camera-drone.mp4',
   },
-  {
-    name: 'Static',
-    description: 'Camera completamente ferma, come un treppiede.',
-    whenToUse: 'Dialoghi, interviste, scene contemplative.',
-  },
-];
-
-const motionPresets = [
-  { name: 'Pan Left', video: '/modulo-h/video/motion-pan-left.mp4' },
-  { name: 'Tilt Up', video: '/modulo-h/video/motion-tilt-up.mp4' },
-  { name: 'Zoom In', video: '/modulo-h/video/motion-zoom-in.mp4' },
-  { name: 'Dolly In', video: '/modulo-h/video/motion-dolly-in.mp4' },
-  { name: 'Drone', video: '/modulo-h/video/motion-drone.mp4' },
 ];
 
 const useCasesGood = [
@@ -193,6 +176,137 @@ function AlertIcon() {
       <line x1="12" y1="9" x2="12" y2="13" />
       <line x1="12" y1="17" x2="12.01" y2="17" />
     </svg>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Camera Movements — Interactive Card                                */
+/* ------------------------------------------------------------------ */
+
+function CameraMovementsCard() {
+  const [active, setActive] = useState(0);
+  const current = cameraMovements[active];
+
+  return (
+    <AnimatedSection delay={0.3}>
+      <div className="max-w-4xl mx-auto">
+        <h3
+          className="heading-subsection text-center mb-6"
+          style={{ color: 'var(--text-primary)', fontSize: 'clamp(1.25rem, 2.5vw, 1.5rem)' }}
+        >
+          Glossario movimenti camera
+        </h3>
+
+        <div className="glass-card overflow-hidden">
+          {/* Movement selector buttons */}
+          <div
+            className="flex flex-wrap gap-0 border-b"
+            style={{ borderColor: 'var(--border-subtle)' }}
+          >
+            {cameraMovements.map((mov, idx) => (
+              <button
+                key={mov.name}
+                onClick={() => setActive(idx)}
+                className="flex-1 min-w-[100px] px-4 py-3 text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2"
+                style={{
+                  background: active === idx ? 'rgba(249, 115, 22, 0.1)' : 'transparent',
+                  color: active === idx ? 'var(--accent-primary)' : 'var(--text-muted)',
+                  borderBottom: active === idx ? '2px solid var(--accent-primary)' : '2px solid transparent',
+                }}
+              >
+                <CameraIcon />
+                {mov.name}
+              </button>
+            ))}
+          </div>
+
+          {/* Content: video + description side by side */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-0">
+            {/* Video */}
+            <div
+              className="flex items-center justify-center p-4"
+              style={{ background: 'var(--bg-surface)' }}
+            >
+              <video
+                key={current.video}
+                src={current.video}
+                className="w-full aspect-video rounded-lg object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+            </div>
+
+            {/* Info */}
+            <div
+              className="p-6 flex flex-col justify-center gap-4"
+              style={{ borderLeft: '1px solid var(--border-subtle)' }}
+            >
+              <div className="flex items-center gap-3">
+                <span
+                  className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                  style={{
+                    background: 'rgba(249, 115, 22, 0.08)',
+                    color: 'var(--accent-primary)',
+                    border: '1px solid rgba(249, 115, 22, 0.15)',
+                  }}
+                >
+                  <CameraIcon />
+                </span>
+                <h4
+                  className="font-bold text-xl"
+                  style={{ color: 'var(--text-primary)' }}
+                >
+                  {current.name}
+                </h4>
+              </div>
+
+              <p
+                className="text-sm leading-relaxed"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                {current.description}
+              </p>
+
+              <div
+                className="rounded-lg p-3"
+                style={{
+                  background: 'var(--bg-elevated)',
+                  border: '1px solid var(--border-subtle)',
+                }}
+              >
+                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                  <span className="font-semibold" style={{ color: 'var(--text-secondary)' }}>
+                    Immagine di partenza:{' '}
+                  </span>
+                  Donna seduta a un tavolo di un bar all&apos;aperto, generata con Imagen 4 Ultra.
+                  Ogni movimento e stato generato con Kling 3.0 Pro.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Base image reference strip */}
+          <div
+            className="px-4 py-3 flex items-center gap-3"
+            style={{
+              background: 'var(--bg-elevated)',
+              borderTop: '1px solid var(--border-subtle)',
+            }}
+          >
+            <img
+              src="/modulo-h/video/camera-base.png"
+              alt="Immagine base"
+              className="w-16 h-10 rounded object-cover"
+            />
+            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+              Tutti e 5 i video partono dalla stessa immagine di partenza (sopra) per evidenziare la differenza tra i movimenti.
+            </p>
+          </div>
+        </div>
+      </div>
+    </AnimatedSection>
   );
 }
 
@@ -514,141 +628,123 @@ export default function VideoSection() {
       </AnimatedSection>
 
       {/* -------------------------------------------------------- */}
-      {/*  5. Camera movements glossary                              */}
+      {/*  5. Esempi video: i tre approcci                             */}
       {/* -------------------------------------------------------- */}
       <AnimatedSection delay={0.25}>
-        <div className="max-w-4xl mx-auto space-y-6">
-          <div className="text-center space-y-2">
-            <div className="flex items-center justify-center gap-2 mb-1">
-              <span style={{ color: 'var(--accent-primary)' }}>
-                <CameraIcon />
-              </span>
-              <h3
-                className="heading-subsection"
-                style={{ color: 'var(--text-primary)', fontSize: 'clamp(1.25rem, 2.5vw, 1.5rem)' }}
-              >
-                Glossario movimenti camera
-              </h3>
-            </div>
-            <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-              Usate questi termini nei prompt per controllare il movimento nei video generati.
-            </p>
-          </div>
-
-          <div className="glass-card overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr style={{ background: 'var(--bg-elevated)' }}>
-                    <th className="text-left px-4 py-3 font-semibold" style={{ color: 'var(--text-secondary)', minWidth: '100px' }}>
-                      Movimento
-                    </th>
-                    <th className="text-left px-4 py-3 font-semibold" style={{ color: 'var(--text-secondary)' }}>
-                      Descrizione
-                    </th>
-                    <th className="text-left px-4 py-3 font-semibold" style={{ color: 'var(--text-secondary)', minWidth: '200px' }}>
-                      Quando usarlo
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cameraMovements.map((cm, i) => (
-                    <tr
-                      key={cm.name}
-                      style={{
-                        borderTop: '1px solid var(--border-subtle)',
-                        background: i % 2 === 1 ? 'var(--bg-elevated)' : 'transparent',
-                      }}
-                    >
-                      <td className="px-4 py-3">
-                        <span className="font-mono font-semibold" style={{ color: 'var(--accent-primary)' }}>
-                          {cm.name}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3" style={{ color: 'var(--text-secondary)' }}>
-                        {cm.description}
-                      </td>
-                      <td className="px-4 py-3" style={{ color: 'var(--text-muted)' }}>
-                        {cm.whenToUse}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </AnimatedSection>
-
-      {/* -------------------------------------------------------- */}
-      {/*  6. Video examples placeholder                             */}
-      {/* -------------------------------------------------------- */}
-      <AnimatedSection delay={0.3}>
         <div className="max-w-4xl mx-auto space-y-6">
           <h3
             className="heading-subsection text-center"
             style={{ color: 'var(--text-primary)', fontSize: 'clamp(1.25rem, 2.5vw, 1.5rem)' }}
           >
-            Esempio: da immagine a video con movimenti camera
+            Esempi: i tre approcci alla generazione video
           </h3>
 
-          <div className="glass-card overflow-hidden">
-            {/* Source image */}
-            <div className="relative" style={{ background: 'var(--bg-elevated)' }}>
-              <img
-                src="/modulo-h/video/video-base-landscape.png"
-                alt="Immagine paesaggio di partenza per la generazione video"
-                className="w-full h-auto max-h-80 object-cover"
-                loading="lazy"
-              />
-              <span
-                className="absolute bottom-3 left-3 px-3 py-1.5 rounded-lg text-xs font-semibold"
-                style={{ background: 'rgba(0,0,0,0.7)', color: '#fff' }}
-              >
-                Immagine di partenza
-              </span>
+          <StaggerContainer className="grid md:grid-cols-3 gap-6">
+            {/* Text-to-Video */}
+            <StaggerItem>
+              <div className="glass-card overflow-hidden h-full flex flex-col">
+                <div
+                  className="px-4 py-2 text-center text-xs font-semibold uppercase tracking-wider"
+                  style={{ background: 'rgba(249, 115, 22, 0.08)', color: 'var(--accent-primary)', borderBottom: '1px solid var(--border-subtle)' }}
+                >
+                  Text → Video
+                </div>
+                <video
+                  src="/modulo-h/video/video-text-to-video.mp4"
+                  className="w-full aspect-video object-cover"
+                  controls
+                  muted
+                  playsInline
+                  preload="metadata"
+                />
+                <div className="p-4 flex-1 flex flex-col gap-2">
+                  <p className="text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>Solo testo come input</p>
+                  <code className="text-[10px] leading-relaxed block p-2 rounded" style={{ background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}>
+                    &quot;A majestic eagle soaring through misty mountain peaks at sunrise...&quot;
+                  </code>
+                  <p className="text-xs mt-auto" style={{ color: 'var(--text-muted)' }}>Generato con Kling 3.0 Pro</p>
+                </div>
+              </div>
+            </StaggerItem>
+
+            {/* Image-to-Video */}
+            <StaggerItem>
+              <div className="glass-card overflow-hidden h-full flex flex-col">
+                <div
+                  className="px-4 py-2 text-center text-xs font-semibold uppercase tracking-wider"
+                  style={{ background: 'rgba(249, 115, 22, 0.08)', color: 'var(--accent-primary)', borderBottom: '1px solid var(--border-subtle)' }}
+                >
+                  Immagine → Video
+                </div>
+                <video
+                  src="/modulo-h/video/video-image-to-video.mp4"
+                  className="w-full aspect-video object-cover"
+                  controls
+                  muted
+                  playsInline
+                  preload="metadata"
+                />
+                <div className="p-4 flex-1 flex flex-col gap-2">
+                  <p className="text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>Immagine + prompt di movimento</p>
+                  <div className="flex gap-2 items-center">
+                    <img src="/modulo-h/editing/astronaut-original.png" alt="Input" className="w-10 h-10 rounded object-cover" />
+                    <span className="text-[var(--accent-primary)]">→</span>
+                    <code className="text-[10px] p-1.5 rounded flex-1" style={{ background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}>
+                      &quot;The astronaut slowly turns...&quot;
+                    </code>
+                  </div>
+                  <p className="text-xs mt-auto" style={{ color: 'var(--text-muted)' }}>Generato con Kling 3.0 Pro</p>
+                </div>
+              </div>
+            </StaggerItem>
+
+            {/* First + Last Frame */}
+            <StaggerItem>
+              <div className="glass-card overflow-hidden h-full flex flex-col">
+                <div
+                  className="px-4 py-2 text-center text-xs font-semibold uppercase tracking-wider"
+                  style={{ background: 'rgba(249, 115, 22, 0.08)', color: 'var(--accent-primary)', borderBottom: '1px solid var(--border-subtle)' }}
+                >
+                  Primo + Ultimo frame
+                </div>
+                <video
+                  src="/modulo-h/video/video-first-last-frame.mp4"
+                  className="w-full aspect-video object-cover"
+                  controls
+                  muted
+                  playsInline
+                  preload="metadata"
+                />
+                <div className="p-4 flex-1 flex flex-col gap-2">
+                  <p className="text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>Due immagini = inizio e fine</p>
+                  <div className="flex gap-2 items-center">
+                    <img src="/modulo-h/editing/astronaut-original.png" alt="Start" className="w-10 h-10 rounded object-cover" />
+                    <span className="text-[var(--accent-primary)]">→</span>
+                    <img src="/modulo-h/video/astronaut-endframe.png" alt="End" className="w-10 h-10 rounded object-cover" />
+                  </div>
+                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                    L&apos;AI genera la transizione tra i due frame automaticamente.
+                  </p>
+                  <p className="text-xs mt-auto" style={{ color: 'var(--text-muted)' }}>Generato con Kling 3.0 Pro</p>
+                </div>
+              </div>
+            </StaggerItem>
+          </StaggerContainer>
+
+          <AnimatedSection>
+            <div className="quote-block text-sm">
+              <strong>Audio-sync:</strong> Alcuni modelli (Kling 3.0, Sora) supportano anche la generazione
+              con audio sincronizzato: dialoghi, musica ed effetti sonori generati insieme al video.
+              E una funzionalita ancora in fase iniziale, ma molto promettente per contenuti social e creativi.
             </div>
-
-            <div className="p-6 space-y-5">
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                Da questa immagine, con i motion preset di Higgsfield DoP, si
-                generano video con diversi movimenti camera. Ogni preset
-                applica una traiettoria diversa mantenendo lo stesso punto di partenza.
-              </p>
-
-              <StaggerContainer className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                {motionPresets.map((preset) => (
-                  <StaggerItem key={preset.name}>
-                    <div
-                      className="rounded-xl overflow-hidden"
-                      style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)' }}
-                    >
-                      <video
-                        src={preset.video}
-                        className="w-full aspect-video object-cover"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        preload="metadata"
-                      />
-                      <div className="px-3 py-2 text-center" style={{ borderTop: '1px solid var(--border-subtle)' }}>
-                        <span className="text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>
-                          {preset.name}
-                        </span>
-                      </div>
-                    </div>
-                  </StaggerItem>
-                ))}
-              </StaggerContainer>
-
-              <p className="text-xs text-center" style={{ color: 'var(--text-muted)' }}>
-                Video generati con Kling 2.1 da un&apos;unica immagine di partenza, variando solo il movimento camera.
-              </p>
-            </div>
-          </div>
+          </AnimatedSection>
         </div>
       </AnimatedSection>
+
+      {/* -------------------------------------------------------- */}
+      {/*  6. Camera movements — interactive card                    */}
+      {/* -------------------------------------------------------- */}
+      <CameraMovementsCard />
 
       {/* Availability note */}
       <AnimatedSection delay={0.35}>

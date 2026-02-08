@@ -3,7 +3,6 @@ import EditingSection from '@/components/EditingSection';
 import VideoSection from '@/components/VideoSection';
 import { AvatarSection } from '@/components/AvatarSection';
 import { EthicsSection } from '@/components/EthicsSection';
-import { ProfileWorkflow } from '@/components/ProfileWorkflow';
 
 export default function ModuloHParte2() {
   return (
@@ -18,7 +17,7 @@ export default function ModuloHParte2() {
             </h1>
             <p className="body-large text-[var(--text-secondary)] max-w-2xl mx-auto">
               Modificare immagini con AI, generare video, creare avatar parlanti,
-              gestire copyright e trasparenza, e migliorare la vostra foto profilo LinkedIn.
+              e gestire copyright e trasparenza.
             </p>
           </AnimatedSection>
         </div>
@@ -33,8 +32,7 @@ export default function ModuloHParte2() {
               rimuovete sfondi, espandete inquadrature, aumentate la risoluzione. Per i video,
               Kling 3.0 e Veo 3 sono oggi utilizzabili per clip professionali brevi. Gli avatar
               AI (Synthesia, HeyGen) creano video formativi in decine di lingue. Dichiarate sempre
-              quando un contenuto e AI-generated. Per la foto profilo LinkedIn: migliorate la
-              vostra foto reale, non generatene una falsa.
+              quando un contenuto e AI-generated.
             </div>
           </AnimatedSection>
         </div>
@@ -112,25 +110,6 @@ export default function ModuloHParte2() {
           </AnimatedSection>
 
           <EthicsSection />
-        </div>
-      </section>
-
-      <div className="section-divider max-w-xl my-4" />
-
-      {/* H.7 - Esercizio: Foto profilo */}
-      <section id="esercizio" className="py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <AnimatedSection className="mb-12">
-            <p className="text-sm font-mono text-[var(--accent-primary)] mb-2">H.7 — ESERCIZIO</p>
-            <h2 className="heading-section mb-4">Foto profilo professionale</h2>
-            <p className="body-large text-[var(--text-secondary)] max-w-2xl">
-              L&apos;esercizio principale del modulo: trasformare una vostra foto
-              in una foto profilo LinkedIn professionale, usando solo strumenti
-              gratuiti e la vostra foto reale.
-            </p>
-          </AnimatedSection>
-
-          <ProfileWorkflow />
         </div>
       </section>
 
@@ -257,10 +236,10 @@ export default function ModuloHParte2() {
                   </li>
                   <li>
                     &bull;{' '}
-                    <a href="https://remove.bg" target="_blank" rel="noopener noreferrer" className="text-[var(--accent-primary)] hover:underline">
-                      remove.bg
+                    <a href="https://artificialanalysis.ai/leaderboards/video-generation" target="_blank" rel="noopener noreferrer" className="text-[var(--accent-primary)] hover:underline">
+                      Artificial Analysis
                     </a>{' '}
-                    — Per l&apos;esercizio foto profilo
+                    — Benchmark modelli video AI
                   </li>
                 </ul>
               </div>

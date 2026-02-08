@@ -113,17 +113,13 @@ const cameraMovements: CameraMovement[] = [
     name: 'Tracking',
     description: 'La camera si muove lateralmente seguendo il soggetto, mantenendolo al centro del frame. Il movimento e parallelo alla traiettoria del soggetto.',
     whenToUse: 'Seguire un personaggio che cammina, scene dinamiche, inseguimenti.',
+    video: '/modulo-h/video/camera-tracking.mp4',
   },
   {
     name: 'Drone',
     description: 'Ripresa aerea con movimento libero nello spazio 3D. La camera si alza e si allontana (o viceversa) rivelando l\'intera scena dall\'alto con prospettiva a volo d\'uccello.',
     whenToUse: 'Viste panoramiche, transizioni tra ambienti, aperture epiche.',
     video: '/modulo-h/video/camera-drone.mp4',
-  },
-  {
-    name: 'Static',
-    description: 'Camera completamente ferma, come montata su un treppiede. Nessun movimento: il soggetto si muove nel frame, la camera no. L\'attenzione e tutta sull\'azione.',
-    whenToUse: 'Dialoghi, interviste, scene contemplative, focus sul soggetto.',
   },
 ];
 

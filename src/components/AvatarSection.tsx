@@ -201,15 +201,38 @@ export function AvatarSection() {
       <div>
         <AnimatedSection>
           <div className="glass-card p-6">
-            <p className="font-semibold mb-4 text-center">Confronto avatar: stessa frase, tre piattaforme</p>
-            <div className="w-full aspect-[16/7] bg-[var(--bg-elevated)] border-2 border-dashed border-[var(--border-default)] rounded-xl flex items-center justify-center">
-              <p className="text-[var(--text-muted)] text-sm text-center px-4">
-                [Confronto avatar Synthesia vs HeyGen vs D-ID — da generare]
-              </p>
+            <p className="font-semibold mb-4 text-center">Confronto rapido: stessa frase, tre piattaforme</p>
+            <div className="glass-card p-1 overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-[var(--border-default)]">
+                    <th className="text-left py-3 px-4 font-semibold text-[var(--text-primary)]">Aspetto</th>
+                    <th className="text-left py-3 px-4 font-semibold text-[var(--text-primary)]">Synthesia</th>
+                    <th className="text-left py-3 px-4 font-semibold text-[var(--text-primary)]">HeyGen</th>
+                    <th className="text-left py-3 px-4 font-semibold text-[var(--text-primary)]">D-ID</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { aspect: 'Lip-sync', synthesia: 'Eccellente', heygen: 'Buono', did: 'Base' },
+                    { aspect: 'Movimenti corpo', synthesia: 'Naturali', heygen: 'Buoni', did: 'Solo testa' },
+                    { aspect: 'Espressivita', synthesia: 'Alta', heygen: 'Media-alta', did: 'Media' },
+                    { aspect: 'Personalizzazione', synthesia: 'Enterprise', heygen: 'Da foto', did: 'Qualsiasi foto' },
+                    { aspect: 'Velocita generazione', synthesia: 'Media', heygen: 'Veloce', did: 'Veloce' },
+                  ].map((row, idx) => (
+                    <tr key={idx} className="border-b border-[var(--border-subtle)]">
+                      <td className="py-3 px-4 font-medium text-[var(--accent-primary)]">{row.aspect}</td>
+                      <td className="py-3 px-4 text-[var(--text-secondary)]">{row.synthesia}</td>
+                      <td className="py-3 px-4 text-[var(--text-secondary)]">{row.heygen}</td>
+                      <td className="py-3 px-4 text-[var(--text-secondary)]">{row.did}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
             <p className="text-xs text-[var(--text-muted)] mt-3 text-center">
-              Lo stesso testo pronunciato dagli avatar delle tre piattaforme evidenzia differenze
-              nella qualita del lip-sync, nei movimenti e nell&apos;espressivita.
+              Provate ciascuna piattaforma con lo stesso testo breve (10-15 secondi) per
+              valutare voi stessi le differenze di qualita.
             </p>
           </div>
         </AnimatedSection>

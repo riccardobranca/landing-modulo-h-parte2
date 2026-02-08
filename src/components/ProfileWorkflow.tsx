@@ -56,8 +56,8 @@ const workflowSteps: WorkflowStep[] = [
     description:
       'Andate su remove.bg (gratuito), caricate la foto. In pochi secondi avrete il vostro volto e busto isolato su sfondo trasparente. Scaricate il PNG.',
     tool: 'remove.bg',
-    hasImage: false,
-    placeholderText: '[Foto senza sfondo — da generare]',
+    hasImage: true,
+    imageSrc: '/modulo-h/workflow/workflow-step2-nobg.png',
   },
   {
     step: 3,
@@ -65,8 +65,8 @@ const workflowSteps: WorkflowStep[] = [
     description:
       'Aprite Canva (gratuito), create un progetto 400x400 px. Aggiungete uno sfondo tinta unita (grigio chiaro, blu scuro, beige) o un gradiente sobrio. Inserite sopra la vostra foto senza sfondo.',
     tool: 'Canva / qualsiasi editor',
-    hasImage: false,
-    placeholderText: '[Foto con sfondo professionale — da generare]',
+    hasImage: true,
+    imageSrc: '/modulo-h/workflow/workflow-step3-background.png',
   },
   {
     step: 4,
@@ -74,8 +74,8 @@ const workflowSteps: WorkflowStep[] = [
     description:
       'Se il viso e scuro, aumentate leggermente la luminosita. Aggiungete un po\' di contrasto per "dare vita" all\'immagine. L\'obiettivo: viso chiaro e ben definito, non sovraesposto.',
     tool: 'Canva / editor foto del telefono',
-    hasImage: false,
-    placeholderText: '[Foto con luminosita corretta — da generare]',
+    hasImage: true,
+    imageSrc: '/modulo-h/workflow/workflow-step4-adjusted.png',
   },
   {
     step: 5,
@@ -83,8 +83,8 @@ const workflowSteps: WorkflowStep[] = [
     description:
       'Esportate come PNG (non JPG, per evitare artefatti di compressione). Dimensione minima 400x400 pixel, meglio 800x800: lasciate che LinkedIn comprima.',
     tool: 'Canva / editor di esportazione',
-    hasImage: false,
-    placeholderText: '[Foto finale esportata — da generare]',
+    hasImage: true,
+    imageSrc: '/modulo-h/workflow/workflow-step5-final.png',
   },
 ];
 

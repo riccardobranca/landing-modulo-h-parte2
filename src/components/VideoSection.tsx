@@ -120,7 +120,13 @@ const cameraMovements: CameraMovement[] = [
   },
 ];
 
-const motionPresets = ['Pan Left', 'Tilt Up', 'Zoom In', 'Dolly In', 'Drone'];
+const motionPresets = [
+  { name: 'Pan Left', video: '/modulo-h/video/motion-pan-left.mp4' },
+  { name: 'Tilt Up', video: '/modulo-h/video/motion-tilt-up.mp4' },
+  { name: 'Zoom In', video: '/modulo-h/video/motion-zoom-in.mp4' },
+  { name: 'Dolly In', video: '/modulo-h/video/motion-dolly-in.mp4' },
+  { name: 'Drone', video: '/modulo-h/video/motion-drone.mp4' },
+];
 
 const useCasesGood = [
   'Teaser e hook (3-10 secondi) per social media',
@@ -610,36 +616,25 @@ export default function VideoSection() {
                 applica una traiettoria diversa mantenendo lo stesso punto di partenza.
               </p>
 
-              {/* Placeholder cards */}
               <StaggerContainer className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
                 {motionPresets.map((preset) => (
-                  <StaggerItem key={preset}>
+                  <StaggerItem key={preset.name}>
                     <div
                       className="rounded-xl overflow-hidden"
                       style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-subtle)' }}
                     >
-                      <div
-                        className="aspect-video flex items-center justify-center relative"
-                        style={{ background: 'var(--bg-elevated)' }}
-                      >
-                        <div
-                          className="w-10 h-10 rounded-full flex items-center justify-center"
-                          style={{ background: 'var(--bg-surface)', border: '2px solid var(--border-default)' }}
-                        >
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ color: 'var(--text-muted)' }}>
-                            <polygon points="5,3 19,12 5,21" />
-                          </svg>
-                        </div>
-                        <span
-                          className="absolute top-2 right-2 px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide"
-                          style={{ background: 'rgba(249, 115, 22, 0.15)', color: 'var(--accent-primary)' }}
-                        >
-                          Video
-                        </span>
-                      </div>
+                      <video
+                        src={preset.video}
+                        className="w-full aspect-video object-cover"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="metadata"
+                      />
                       <div className="px-3 py-2 text-center" style={{ borderTop: '1px solid var(--border-subtle)' }}>
                         <span className="text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>
-                          {preset}
+                          {preset.name}
                         </span>
                       </div>
                     </div>
@@ -647,8 +642,8 @@ export default function VideoSection() {
                 ))}
               </StaggerContainer>
 
-              <p className="text-xs text-center italic" style={{ color: 'var(--text-muted)' }}>
-                I video di esempio saranno disponibili a breve.
+              <p className="text-xs text-center" style={{ color: 'var(--text-muted)' }}>
+                Video generati con Kling 2.1 da un&apos;unica immagine di partenza, variando solo il movimento camera.
               </p>
             </div>
           </div>
